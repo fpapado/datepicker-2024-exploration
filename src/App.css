@@ -1,0 +1,116 @@
+.datetime-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.datetime-input-wrapper input {
+  anchor-name: --datepicker-anchor-el;
+}
+
+.datepicker {
+  background: #121212;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  min-width: 300px;
+  max-width: 100%;
+  border-radius: 0.5rem;
+}
+
+.datepicker[popover] {
+  position-anchor: --datepicker-anchor-el;
+  inset-block-start: anchor(start);
+  inset-inline-end: anchor(start);
+  /* Reset for the [popover] UA style */
+  inset: auto;
+}
+
+.datepicker[popover]:popover-open {
+  margin-inline: var(--side-padding);
+  margin-block-start: 0.5rem;
+}
+
+.datepicker header {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datepicker .month-year {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.datepicker .month-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.datepicker .month-buttons button {
+  align-content: center;
+  padding: 0.5rem;
+  color: white;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  min-width: 24px;
+  min-height: 24px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.datepicker .days-grid {
+  display: grid;
+  margin-block-start: 1rem;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.datepicker .browsing-day {
+  align-content: center;
+  padding: 0.5rem;
+  color: white;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  min-width: 24px;
+  min-height: 24px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .datepicker .browsing-day:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .datepicker .browsing-day:active {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.datepicker .browsing-day[aria-current="date"] {
+  background-color: #223344;
+}
+
+.datepicker .browsing-day[aria-pressed="true"] {
+  background-color: blue;
+  color: white;
+}
+
+/* Method to visually hide something but still */
+/* keep it available to screen readers */
+.visually-hidden {
+  position: absolute;
+  top: auto;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
