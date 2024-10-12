@@ -7,27 +7,28 @@
   anchor-name: --datepicker-anchor-el;
 }
 
-.datepicker {
-  background: #121212;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  min-width: 300px;
-  max-width: 100%;
-  border-radius: 0.5rem;
-}
-
-.datepicker[popover] {
+.datepicker-popover[popover] {
   position-anchor: --datepicker-anchor-el;
   inset-block-start: anchor(start);
   inset-inline-end: anchor(start);
   /* Reset for the [popover] UA style */
   inset: auto;
+  border: none;
+  padding: 0;
 }
 
-.datepicker[popover]:popover-open {
+.datepicker-popover[popover]:popover-open {
   margin-inline: var(--side-padding);
   margin-block-start: 0.5rem;
+}
+
+.datepicker {
+  background: #121212;
+  color: white;
+  padding: 0.5rem;
+  min-width: 300px;
+  max-width: 100%;
+  border-radius: 0.5rem;
 }
 
 .datepicker header {

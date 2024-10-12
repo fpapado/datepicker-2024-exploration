@@ -1,6 +1,6 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-import { HTMLAttributes, useId, useMemo, useState } from "react";
+import { HTMLAttributes, useId, useMemo, useRef, useState } from "react";
 import "./App.css";
 
 function Datepicker({
@@ -170,8 +170,8 @@ function Datepicker({
 function App() {
   const idPrefix = useId();
   const inputId = idPrefix + "input";
-  const pickerId = idPrefix + "picker";
-  const pickerOpenerId = idPrefix + "opener";
+  const popoverId = idPrefix + "picker-popover";
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   return (
     <form className="date-form">
@@ -182,20 +182,25 @@ function App() {
           type="button"
           className="datepicker-opener"
           //@ts-expect-error not recognised
-          popovertarget={pickerId}
-          id={pickerOpenerId}
+          popovertarget={popoverId}
         >
           Open
         </button>
       </div>
-      <Datepicker
-        id={pickerId}
-        onConfirmSelectedDate={(date) => {
-          // TODO: Separate the popover from the Datepicker itself
-        }}
-        //@ts-expect-error -- typescript does not know about popover yet...
+      <div
+        className="datepicker-popover"
+        id={popoverId}
+        ref={popoverRef}
+        //@ts-expect-error -- react/jsx types do not know about popover yet...
         popover=""
-      />
+      >
+        <Datepicker
+          onConfirmSelectedDate={(date) => {
+            popoverRef.current?.hidePopover();
+            // TODO: Separate the popover from the Datepicker itself
+          }}
+        />
+      </div>
     </form>
   );
 }
