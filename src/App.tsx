@@ -10,6 +10,10 @@ import {
 } from "react";
 import "./App.css";
 
+import { Component as ChevronLeft } from "./assets/chevron-left.svg?svgUse";
+import { Component as ChevronRight } from "./assets/chevron-right.svg?svgUse";
+import { Component as CalendarIcon } from "./assets/calendar.svg?svgUse";
+
 function Datepicker({
   onConfirmSelectedDate,
   ...rest
@@ -133,7 +137,7 @@ function Datepicker({
               setBrowsingDate(browsingDate.subtract({ months: 1 }));
             }}
           >
-            {"<"}
+            <ChevronLeft />
           </button>
           <button
             aria-label="Next month"
@@ -142,7 +146,7 @@ function Datepicker({
               setBrowsingDate(browsingDate.add({ months: 1 }));
             }}
           >
-            {">"}
+            <ChevronRight />
           </button>
         </div>
       </header>
@@ -209,9 +213,14 @@ function App() {
           className="datepicker-opener"
           //@ts-expect-error not recognised
           popovertarget={popoverId}
+          // NOTE: Arguably, we could elect to move the focus when opening the
+          // popover, in which case we could skip [aria-expanded]. However, we
+          // choose to let the user navigate to the popover contents on their
+          // own. There are a few possible designs here; we just picked this
+          // one for simplicity and demonstration.
           aria-expanded={popoverState === "open"}
         >
-          Datepicker
+          <CalendarIcon />
         </button>
       </div>
       <div

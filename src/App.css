@@ -7,10 +7,34 @@
   anchor-name: --datepicker-anchor-el;
 }
 
+.datepicker-opener {
+  min-width: 24px;
+  min-height: 24px;
+  aspect-ratio: 1/1;
+  padding: 0.5rem;
+  border: 1px solid #111;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.datepicker-opener svg {
+  width: 24px;
+}
+
+@media (hover: hover) {
+  .datepicker-opener:hover {
+    background-color: rgba(0 0 0 / 0.1);
+  }
+  .datepicker-opener:active {
+    background-color: rgba(0 0 0 / 0.2);
+  }
+}
+
 .datepicker-opener[aria-expanded="true"] {
   background-color: blue;
   color: white;
-  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .datepicker-popover[popover] {
@@ -68,6 +92,11 @@
   min-height: 24px;
   transition: background-color 0.2s ease;
   cursor: pointer;
+}
+
+.datepicker .month-buttons button svg {
+  width: 24px;
+  height: 24px;
 }
 
 .datepicker .days-grid {
