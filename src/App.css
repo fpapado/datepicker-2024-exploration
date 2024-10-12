@@ -7,6 +7,12 @@
   anchor-name: --datepicker-anchor-el;
 }
 
+.datepicker-opener[aria-expanded="true"] {
+  background-color: blue;
+  color: white;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
 .datepicker-popover[popover] {
   position-anchor: --datepicker-anchor-el;
   inset-block-start: anchor(start);
@@ -101,6 +107,12 @@
 .datepicker .browsing-day[aria-pressed="true"] {
   background-color: blue;
   color: white;
+}
+
+.datepicker footer {
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
 }
 
 /* Method to visually hide something but still */

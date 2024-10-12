@@ -1,6 +1,13 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-import { HTMLAttributes, useId, useMemo, useRef, useState } from "react";
+import {
+  HTMLAttributes,
+  useCallback,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
 
 function Datepicker({
@@ -155,14 +162,16 @@ function Datepicker({
           </button>
         ))}
       </div>
-      <button
-        type="button"
-        onClick={() => {
-          onConfirmSelectedDate(selectedDate);
-        }}
-      >
-        Done
-      </button>
+      <footer>
+        <button
+          type="button"
+          onClick={() => {
+            onConfirmSelectedDate(selectedDate);
+          }}
+        >
+          Done
+        </button>
+      </footer>
     </div>
   );
 }
@@ -171,7 +180,24 @@ function App() {
   const idPrefix = useId();
   const inputId = idPrefix + "input";
   const popoverId = idPrefix + "picker-popover";
-  const popoverRef = useRef<HTMLDivElement>(null);
+
+  const [popoverState, setPopoverState] = useState<"open" | "closed">("closed");
+
+  const popoverRef = useRef<HTMLDivElement | null>();
+
+  const onPopoverRef = useCallback((el: HTMLDivElement | null) => {
+    console.log(el);
+    popoverRef.current = el;
+
+    const onToggle = (ev: ToggleEvent) =>
+      setPopoverState(ev.newState as "open" | "closed");
+
+    el?.addEventListener(
+      "toggle",
+      // @ts-expect-error -- ts does not type the 'toggle' event as ToggleEvent yet
+      onToggle
+    );
+  }, []);
 
   return (
     <form className="date-form">
@@ -183,14 +209,15 @@ function App() {
           className="datepicker-opener"
           //@ts-expect-error not recognised
           popovertarget={popoverId}
+          aria-expanded={popoverState === "open"}
         >
-          Open
+          Datepicker
         </button>
       </div>
       <div
         className="datepicker-popover"
         id={popoverId}
-        ref={popoverRef}
+        ref={onPopoverRef}
         //@ts-expect-error -- react/jsx types do not know about popover yet...
         popover=""
       >
