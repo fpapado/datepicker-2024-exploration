@@ -11,7 +11,7 @@
   min-width: 24px;
   min-height: 24px;
   aspect-ratio: 1/1;
-  padding: 0.5rem;
+  align-content: center;
   border: 1px solid #111;
   border-radius: 0.5rem;
   background-color: transparent;
@@ -20,7 +20,9 @@
 }
 
 .datepicker-opener svg {
-  width: 24px;
+  aspect-ratio: 1/1;
+  max-width: 24px;
+  width: 100%;
 }
 
 @media (hover: hover) {
@@ -33,7 +35,7 @@
 }
 
 .datepicker-opener[aria-expanded="true"] {
-  background-color: blue;
+  background-color: #121212;
   color: white;
 }
 
@@ -41,22 +43,67 @@
   position-anchor: --datepicker-anchor-el;
   inset-block-start: anchor(start);
   inset-inline-end: anchor(start);
-  /* Reset for the [popover] UA style */
+  /* 
+   * Reset for the [popover] UA style for insets
+   * @see https://github.com/w3c/csswg-drafts/issues/10258
+   */
   inset: auto;
+
+  /* TODO: Is there a better way of positioning the sides? */
+  margin-inline: var(--side-padding);
+  margin-block-start: 0.5rem;
+
   border: none;
   padding: 0;
+
+  /* Allow animating discrete values, such as display and overlay. `overlay` is
+   * a property that controls when an element is in the top-layer, such as for
+   * popovers and dialog with showModal(). overlay is set automatically by the
+   * UA, but we can transition it/delay it. Thus, delaying when an element exits
+   * the top layer (via `overlay`), and when it becomes `display: none` we can
+   * ensure that all animations complete, prior to the element being removed or
+   * entering normal flow. 
+   *
+   * Without these properties, we would use JS to listen for a close event and
+   * wait for animations, prior to dismissing the popover manually. That is of
+   * course doable, but this is a bit simpler, and works natively with the
+   * soft-dismiss behavior.
+   */
+  transition-behavior: allow-discrete;
+  transition-duration: 0.2s;
+  transition-property: display, overlay, opacity;
+
+  opacity: 0;
+}
+
+.datepicker-popover[popover]::before {
+  display: block;
+  width: 0;
+  height: 0;
+  border-block-start: 0 dotted;
+  border-inline: 10px solid transparent;
+  border-block-end: 10px solid #121212;
+  margin-inline-start: 1rem;
+  content: "";
 }
 
 .datepicker-popover[popover]:popover-open {
-  margin-inline: var(--side-padding);
-  margin-block-start: 0.5rem;
+  opacity: 1;
+
+  /* 
+   * Popovers are equivalent to display: none prior to being open, so we need to
+   * set their initial styles for transitions.
+   */
+  @starting-style {
+    opacity: 0;
+  }
 }
 
 .datepicker {
   background: #121212;
   color: white;
-  padding: 0.5rem;
-  min-width: 300px;
+  padding: 1rem;
+  width: 100%;
   max-width: 100%;
   border-radius: 0.5rem;
 }
@@ -134,7 +181,7 @@
 }
 
 .datepicker .browsing-day[aria-pressed="true"] {
-  background-color: blue;
+  background-color: #4f49b4;
   color: white;
 }
 

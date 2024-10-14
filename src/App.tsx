@@ -214,19 +214,22 @@ function App() {
           //@ts-expect-error not recognised
           popovertarget={popoverId}
           // NOTE: Arguably, we could elect to move the focus when opening the
-          // popover, in which case we could skip [aria-expanded]. However, we
-          // choose to let the user navigate to the popover contents on their
-          // own. There are a few possible designs here; we just picked this
-          // one for simplicity and demonstration.
+          // popover, in which case we could skip [aria-expanded] and use
+          // aria-haspopup="dialog" instead. However, we choose to let the user
+          // navigate to the popover contents on their own. There are a few
+          // possible designs here; we just picked this one for simplicity and
+          // demonstration.
           aria-expanded={popoverState === "open"}
         >
-          <CalendarIcon />
+          <CalendarIcon role="img" aria-label="Calendar" />
         </button>
       </div>
       <div
         className="datepicker-popover"
         id={popoverId}
         ref={onPopoverRef}
+        // The datepicker with a popover is a non-modal dialog
+        role="dialog"
         //@ts-expect-error -- react/jsx types do not know about popover yet...
         popover=""
       >
