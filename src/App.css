@@ -1,3 +1,22 @@
+#root {
+  display: grid;
+  padding-block-start: 4rem;
+  justify-content: center;
+  align-items: start;
+  height: 100%;
+}
+
+.date-form {
+  min-height: 8rem;
+  inline-size: fit-content;
+  min-inline-size: 25rem;
+  padding-inline: 1rem;
+  padding-block: 2rem;
+  border-radius: 0.5rem;
+  background: #eee;
+  border: 1px solid #111;
+}
+
 .datetime-input-wrapper {
   display: flex;
   gap: 0.5rem;
@@ -14,7 +33,7 @@
   align-content: center;
   border: 1px solid #111;
   border-radius: 0.5rem;
-  background-color: transparent;
+  background-color: #ddd;
   transition: color 0.2s ease, background-color 0.2s ease;
   cursor: pointer;
 }
@@ -41,20 +60,18 @@
 
 .datepicker-popover[popover] {
   position-anchor: --datepicker-anchor-el;
-  inset-block-start: anchor(start);
-  inset-inline-end: anchor(start);
+  position-area: block-end span-inline-end;
   /* 
    * Reset for the [popover] UA style for insets
    * @see https://github.com/w3c/csswg-drafts/issues/10258
    */
   inset: auto;
-
-  /* TODO: Is there a better way of positioning the sides? */
-  margin-inline: var(--side-padding);
+  margin: 0;
   margin-block-start: 0.5rem;
+  padding: 0;
 
   border: none;
-  padding: 0;
+  background: none;
 
   /* Allow animating discrete values, such as display and overlay. `overlay` is
    * a property that controls when an element is in the top-layer, such as for
